@@ -4,6 +4,7 @@
 #include <QDebug>
 #include "connection.h"
 #include "entretien.h"
+#include "historique.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

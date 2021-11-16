@@ -2,9 +2,12 @@
 #include "ui_mainwindow.h"
 #include"entretien.h"
 #include "connection.h"
+#include"historique.h"
 #include <QMessageBox>
 #include <QSqlQueryModel>
 #include<QDebug>
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -13,6 +16,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->table_e->setModel(E.Afficher());
     ui->comboBox_C->addItems(E.lister());
     ui->comboBox_S->addItems(E.lister2());
+    ui->comboBox_O->addItems(E.lister3());
+    ui->comboBoxStat->addItems(E.listerS());
+    ui->tri->setModel(E.TrieE());
+    ui->view_histo->setModel(H.Afficher());
+stat();
 
 }
 
@@ -28,7 +36,8 @@ void MainWindow::on_ajouter_clicked()
 connection c;
 c.createconnection();
     int CIN_A=ui->cin_aj->text().toInt();
-    int ID_offre=ui->offre->text().toInt();
+    //int ID_offre=ui->offre->text().toInt();
+    int ID_offre =ui->comboBox_O->currentText().toInt();
     QString NOM_C=ui->comboBox_C->currentText();
     QDate DateE= ui->date_Aj->date();
     QString Heures= ui->time_aj->text();
@@ -41,7 +50,14 @@ c.createconnection();
      QMessageBox ::information(nullptr,QObject::tr("OK"),
                                QObject::tr("Ajout effectue \n"
                                            "click cancel to exit,"),QMessageBox::Cancel);
-       ui->table_e->setModel(E.Afficher());
+     QString operation="Ajout";
+     historique H(operation);
+     H.Ajouter();
+      ui->view_histo->setModel(H.Afficher());
+      ui->table_e->setModel(E.Afficher());
+      ui->tri->setModel(E.TrieE());
+      ui->comboBox_S->addItems(E.lister2());
+
 
    }
    else
@@ -64,25 +80,34 @@ void MainWindow::on_offre_A_textChanged(const QString &arg1)
 
 }
 
-void MainWindow::on_num_A_textChanged(const QString &arg1)
+void MainWindow::on_num_A_textChanged(const QString &arg2)
 {
     entretien e;
-    ui->table_e->setModel( e.rechercher_A(arg1));
+    ui->table_e->setModel( e.rechercher_A(arg2));
 
 }
 
 void MainWindow::on_Supprimer_clicked()
 {
+    connection c;
+    c.createconnection();
     entretien E;
+    historique H;
    // int id=ui->num_S->text().toInt();
       int id =ui->comboBox_S->currentText().toInt();
        bool test =E.Supprimer(id);
        QMessageBox msg ;
        if (test)
         {
-
        msg.setText("suppression avec succés");
        ui->table_e->setModel(E.Afficher());
+       ui->tri->setModel(E.TrieE());
+         ui->comboBox_S->clear();
+       QString operation="Suppression";
+       historique H(operation);
+       H.Ajouter();
+        ui->view_histo->setModel(H.Afficher());
+
        }
        else
        {
@@ -106,11 +131,9 @@ void MainWindow::on_num_r_clicked()
      ui->date_M->setDate(query.value(1).toDate());
      ui->time_M->setTime(query.value(2).toTime());
 
-QString t=query.value(0).toString();
-//if (t=="en ligne") {
+      QString t=query.value(0).toString();
      ui->comboBox_M->setCurrentText(t);
 
-//}
              }
          }
 }
@@ -125,9 +148,15 @@ void MainWindow::on_modifier_clicked()
    bool test= E.modifier(id,Type,date,temps);
     QMessageBox msg;
    if(test)
-   {
+   { ui->table_e->setModel(E.Afficher());
                    msg.setText("modifie avec succés");
                   ui->table_e->setModel(E.Afficher());
+                  QString operation="Modifier";
+                  historique H(operation);
+                  H.Ajouter();
+                   ui->view_histo->setModel(H.Afficher());
+                    ui->tri->setModel(E.TrieE());
+
                    }
                    else
                    {
@@ -141,3 +170,57 @@ void MainWindow::on_modifier_clicked()
                ui->time_M->clear();
 
 }
+
+
+
+
+
+
+void MainWindow::on_comboBoxStat_currentTextChanged(const QString &arg1)
+{stat();
+/*
+    float SA=0,SO=0;
+     int a =E.statistique_EA(ui->comboBoxStat->currentText());
+    int o=E.statistique_EO(ui->comboBoxStat->currentText());
+     int t=E.statistique_ET(ui->comboBoxStat->currentText());
+     SA=(a*100)/t;
+     SO=(o*100)/t;
+     QBarSet *set0=new QBarSet("Accepté");
+      QBarSet *set1=new QBarSet("Refusé");
+     *set0<<SA;
+      *set1<<SO;
+      QBarSeries *series=new QBarSeries();
+      series->append(set0);
+      series->append(set1);
+      QChart *chart=new QChart();
+      chart->addSeries(series);
+      chart->setTitle("statistique des entretiens");
+      chart->setAnimationOptions(QChart::SeriesAnimations);
+      QStringList categories;
+      categories<<"entretien";
+      QBarCategoryAxis *axis=new QBarCategoryAxis();
+      axis->append(categories);
+      chart->createDefaultAxes();
+      chart->setAxisX(axis,series);
+      QChartView *chartView=new QChartView(chart);
+      chartView->setParent(ui->frame);
+*/
+}
+void MainWindow::stat(){
+
+    ui->progressBar->setValue(0);
+    ui->progressBar_2->setValue(0);
+    int SA=0,SO=0;
+     int a =E.statistique_EA(ui->comboBoxStat->currentText());
+    int o=E.statistique_EO(ui->comboBoxStat->currentText());
+     int t=E.statistique_ET(ui->comboBoxStat->currentText());
+     SA=(a*100)/t;
+     SO=(o*100)/t;
+
+
+ ui->progressBar->setValue(SA);
+  ui->progressBar_2->setValue(SO);
+
+
+}
+

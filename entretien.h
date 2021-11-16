@@ -6,6 +6,24 @@
 #include <QDate>
 #include <QTime>
 #include <QStringList>
+
+
+#include <QDialog>
+#include <iostream>
+#include <QApplication>
+#include <QMainWindow>
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QLegend>
+#include <QtCharts/QBarCategoryAxis>
+#include <QtCharts/QHorizontalStackedBarSeries>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QCategoryAxis>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
+#include <QPainter>
+
 class entretien
 {
 private :
@@ -33,7 +51,7 @@ public:
     void setNOM_C(QString );
     //void setNum(int);
     void setDateE(QDate);
-    void setHeures(QString );
+    void setHeures(QString);
     void setType(QString);
     bool Ajouter();
  QStringList lister();
@@ -41,9 +59,15 @@ QSqlQueryModel * Afficher( );
 QSqlQueryModel * rechercher(QString);
 QSqlQueryModel * rechercher_A(QString);
 bool Supprimer(int);
-bool Verfi(int );
+
 bool modifier(int,QString,QDate,QString);
 QStringList lister2();
+QStringList lister3();
+QStringList listerS();
+QSqlQueryModel * TrieE();
+int  statistique_EA(QString);
+int  statistique_EO(QString);
+int statistique_ET(QString);
 
 };
 

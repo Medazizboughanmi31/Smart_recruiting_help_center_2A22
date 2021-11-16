@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>761</width>
-    <height>445</height>
+    <height>468</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_5">
     <item row="0" column="0">
-     <widget class="QTabWidget" name="tabWidget">
+     <widget class="QTabWidget" name="historique">
       <property name="currentIndex">
        <number>6</number>
       </property>
@@ -37,7 +37,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit"/>
+             <widget class="QLineEdit" name="cin_aj"/>
             </item>
            </layout>
           </item>
@@ -51,7 +51,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_2"/>
+             <widget class="QComboBox" name="comboBox_O"/>
             </item>
            </layout>
           </item>
@@ -65,14 +65,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="lineEdit_4"/>
+             <widget class="QComboBox" name="comboBox_C"/>
             </item>
            </layout>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QComboBox" name="comboBox">
+             <widget class="QComboBox" name="type">
               <item>
                <property name="text">
                 <string>en ligne</string>
@@ -99,26 +99,33 @@
         <item>
          <layout class="QFormLayout" name="formLayout_6">
           <item row="1" column="0">
-           <widget class="QDateEdit" name="dateEdit"/>
-          </item>
-          <item row="4" column="0">
-           <layout class="QFormLayout" name="formLayout_7"/>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCalendarWidget" name="calendarWidget"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QTimeEdit" name="timeEdit"/>
-          </item>
-          <item row="0" column="0">
            <widget class="QLabel" name="label">
             <property name="text">
-             <string>Dates &amp; Heures:</string>
+             <string>Dates :</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QPushButton" name="pushButton">
+          <item row="2" column="0">
+           <widget class="QDateEdit" name="date_Aj"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCalendarWidget" name="calendrier"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Heures:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QTimeEdit" name="time_aj"/>
+          </item>
+          <item row="6" column="0">
+           <layout class="QFormLayout" name="formLayout_7"/>
+          </item>
+          <item row="6" column="1">
+           <widget class="QPushButton" name="ajouter">
             <property name="text">
              <string>Ajouter</string>
             </property>
@@ -138,41 +145,72 @@
           <property name="title">
            <string/>
           </property>
-          <widget class="QPushButton" name="pushButton_4">
+          <widget class="QWidget" name="gridWidget" native="true">
            <property name="geometry">
             <rect>
-             <x>560</x>
-             <y>270</y>
+             <x>10</x>
+             <y>20</y>
              <width>141</width>
-             <height>31</height>
+             <height>161</height>
             </rect>
            </property>
-           <property name="text">
-            <string>Afficher</string>
-           </property>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="offre_A"/>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_8">
+              <property name="text">
+               <string>ID Offre:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
-          <widget class="QLabel" name="label_19">
+          <widget class="QGroupBox" name="groupBox_2">
            <property name="geometry">
             <rect>
-             <x>200</x>
-             <y>120</y>
-             <width>81</width>
-             <height>31</height>
+             <x>149</x>
+             <y>9</y>
+             <width>561</width>
+             <height>341</height>
             </rect>
            </property>
-           <property name="text">
-            <string>Id_Entreprise:</string>
+           <property name="title">
+            <string>Entretiens</string>
            </property>
+           <widget class="QTableView" name="table_e">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>541</width>
+              <height>311</height>
+             </rect>
+            </property>
+           </widget>
           </widget>
-          <widget class="QLineEdit" name="lineEdit_15">
+          <widget class="QWidget" name="gridLayoutWidget">
            <property name="geometry">
             <rect>
-             <x>320</x>
-             <y>120</y>
-             <width>191</width>
-             <height>31</height>
+             <x>10</x>
+             <y>190</y>
+             <width>141</width>
+             <height>141</height>
             </rect>
            </property>
+           <layout class="QGridLayout" name="gridLayout_7">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_12">
+              <property name="text">
+               <string>    Num:   </string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="num_A"/>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>
@@ -183,53 +221,74 @@
         <string>Modifier</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_10">
-          <property name="text">
-           <string>cin:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEdit_3"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>ID Entreprise:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="lineEdit_8">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="0" colspan="2">
-         <widget class="QPushButton" name="pushButton_2">
+        <item row="7" column="0" colspan="2">
+         <widget class="QPushButton" name="modifier">
           <property name="text">
            <string>Modifier</string>
           </property>
          </widget>
         </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="label_11">
-          <property name="text">
-           <string>Date &amp; heures:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QDateTimeEdit" name="dateTimeEdit">
-          <property name="minimumSize">
-           <size>
-            <width>493</width>
-            <height>0</height>
-           </size>
-          </property>
-         </widget>
+        <item row="1" column="0">
+         <layout class="QFormLayout" name="formLayout_4">
+          <item row="6" column="1">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Date :</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QDateEdit" name="date_M"/>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>heures:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QTimeEdit" name="time_M"/>
+          </item>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="comboBox_M">
+            <item>
+             <property name="text">
+              <string>en ligne</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>presentiel</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Type:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="num_M"/>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Num:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QPushButton" name="num_r">
+            <property name="text">
+             <string>Recherche</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -238,34 +297,20 @@
         <string>Supprimer</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_16">
-          <property name="text">
-           <string>CIN:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="lineEdit_11"/>
-        </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_15">
-          <property name="text">
-           <string>ID Entreprise</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="2">
-         <widget class="QPushButton" name="pushButton_3">
+        <item row="4" column="0" colspan="2">
+         <widget class="QPushButton" name="Supprimer">
           <property name="text">
            <string>supprimer</string>
           </property>
          </widget>
         </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="lineEdit_9">
-          <property name="readOnly">
-           <bool>true</bool>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="comboBox_S"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_16">
+          <property name="text">
+           <string>Num:</string>
           </property>
          </widget>
         </item>
@@ -277,43 +322,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
-         <widget class="QTableWidget" name="tableWidget_2">
-          <row>
-           <property name="text">
-            <string/>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>2</string>
-           </property>
-          </row>
-          <column>
-           <property name="text">
-            <string>Date</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>CIN</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Email</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Entreprise</string>
-           </property>
-          </column>
-         </widget>
+         <widget class="QTableView" name="tri"/>
         </item>
        </layout>
       </widget>
@@ -330,10 +339,10 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit_14"/>
+         <widget class="QLineEdit" name="Email_C"/>
         </item>
         <item>
-         <widget class="QTextBrowser" name="textBrowser">
+         <widget class="QTextBrowser" name="mail">
           <property name="html">
            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -356,33 +365,46 @@ p, li { white-space: pre-wrap; }
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QTableWidget" name="tableWidget_3">
-          <row>
-           <property name="text">
-            <string/>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>accepté</string>
-           </property>
-          </row>
-          <row>
-           <property name="text">
-            <string>refusé</string>
-           </property>
-          </row>
-          <column>
-           <property name="text">
-            <string>mois</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>année</string>
-           </property>
-          </column>
-         </widget>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>ID ENTREPRISE:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QProgressBar" name="progressBar">
+            <property name="value">
+             <number>24</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="comboBoxStat"/>
+          </item>
+          <item row="2" column="1">
+           <widget class="QProgressBar" name="progressBar_2">
+            <property name="value">
+             <number>24</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Entretien Accepté:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Entretien Réfusé:</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -391,19 +413,8 @@ p, li { white-space: pre-wrap; }
         <string>Historiques</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="0">
-         <widget class="QTableWidget" name="tableWidget_4">
-          <column>
-           <property name="text">
-            <string>Date</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Type d'opération</string>
-           </property>
-          </column>
-         </widget>
+        <item row="1" column="0">
+         <widget class="QTableView" name="view_histo"/>
         </item>
        </layout>
       </widget>
@@ -426,18 +437,18 @@ p, li { white-space: pre-wrap; }
  <resources/>
  <connections>
   <connection>
-   <sender>calendarWidget</sender>
+   <sender>calendrier</sender>
    <signal>clicked(QDate)</signal>
-   <receiver>dateEdit</receiver>
+   <receiver>date_Aj</receiver>
    <slot>setDate(QDate)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>480</x>
+     <x>472</x>
      <y>264</y>
     </hint>
     <hint type="destinationlabel">
-     <x>473</x>
-     <y>240</y>
+     <x>472</x>
+     <y>142</y>
     </hint>
    </hints>
   </connection>

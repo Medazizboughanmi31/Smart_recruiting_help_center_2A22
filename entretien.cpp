@@ -7,13 +7,16 @@
 #include <QTextDocument>
 #include <QObject>
 #include<QDate>
+
+
+
+
 entretien::entretien()
 {
 
    CIN_A=0;
    ID_offre=0;
    NOM_C="";
-   Heures="";
    Type="";
 
 }
@@ -71,6 +74,30 @@ query.prepare("Select ID_RDV from entretien;");
     }
     return list;
 }
+QStringList entretien::lister3(){
+    QSqlQuery query;
+query.prepare("Select ID from offre where ETAT='o';");
+
+
+ query.exec();
+    QStringList list;
+    while (query.next()) {
+        list << query.value(0).toString();
+    }
+    return list;
+}
+QStringList entretien::listerS(){
+    QSqlQuery query;
+query.prepare("Select ID_S from societe;");
+
+
+ query.exec();
+    QStringList list;
+    while (query.next()) {
+        list << query.value(0).toString();
+    }
+    return list;
+}
 bool entretien::Ajouter()
 {
     QSqlQuery query;
@@ -93,7 +120,7 @@ QSqlQueryModel * entretien::Afficher( )
 {
   QSqlQueryModel * model= new QSqlQueryModel();
 
-       model->setQuery("select entretien.ID_RDV,entretien.ID_O ,entretien.DATE_RDV,entretien.HEURE_RDV,entretien.TYPE_RDV,entretien.NOM_C, societe.NOM_S ,abonne.Nom_A ,abonne.PRENOM_A ,abonne.EMAIL_A from entretien ,offre,societe,abonne where  entretien.ID_O=OFFRE.ID and OFFRE.ID_ENTREPRISE=SOCIETE.ID_S and entretien.CIN_AB=abonne.CIN ; ");
+       model->setQuery("select entretien.ID_RDV,entretien.ID_O ,entretien.DATE_RDV,entretien.HEURE_RDV,entretien.TYPE_RDV,entretien.NOM_C, societe.NOM_S ,abonne.Nom_A ,abonne.PRENOM_A ,abonne.EMAIL_A from entretien ,offre,societe,abonne where  entretien.ID_O=OFFRE.ID and OFFRE.ID_ENTREPRISE=SOCIETE.ID_S and entretien.CIN_AB=abonne.CIN;");
        model->setHeaderData(0, Qt::Horizontal, QObject::tr("Num"));
        model->setHeaderData(1, Qt::Horizontal,QObject:: tr("offre"));
        model->setHeaderData(2, Qt::Horizontal,QObject:: tr("date"));
@@ -130,7 +157,6 @@ QSqlQueryModel * entretien::rechercher_A(QString id)
 {
 
 QSqlQueryModel * model= new QSqlQueryModel();
-QSqlQueryModel * model2= new QSqlQueryModel();
 model->setQuery("select entretien.ID_RDV,entretien.ID_O ,entretien.DATE_RDV,entretien.HEURE_RDV,entretien.TYPE_RDV,entretien.NOM_C, societe.NOM_S ,abonne.Nom_A ,abonne.PRENOM_A ,abonne.EMAIL_A from entretien ,offre,societe,abonne where  entretien.ID_O=OFFRE.ID and OFFRE.ID_ENTREPRISE=SOCIETE.ID_S and entretien.CIN_AB=abonne.CIN and entretien.ID_RDV like '"+id+"%'; ");
 model->setHeaderData(0, Qt::Horizontal, QObject::tr("Num"));
 model->setHeaderData(1, Qt::Horizontal,QObject:: tr("offre"));
@@ -145,14 +171,21 @@ model->setHeaderData(9, Qt::Horizontal, QObject::tr("EMAIL"));
 return model;
 }
 
-bool entretien::Verfi(int id)
+
+
+QSqlQueryModel * entretien ::TrieE()
 {
-     QSqlQuery query;
-     QString id_string=QString::number(id);
-     query.prepare("select ID_RDV from entretien  where  ID_RDV= :id ");
+    QSqlQueryModel * model= new QSqlQueryModel();
+    model->setQuery("select ID_RDV, DATE_RDV, HEURE_RDV, TYPE_RDV From entretien ORDER BY ID_O,DATE_RDV ,HEURE_RDV");
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Num"));
+    model->setHeaderData(1, Qt::Horizontal,QObject:: tr("date"));
+    model->setHeaderData(2, Qt::Horizontal,QObject:: tr("heure"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("type"));
 
-
+    return model;
 }
+
+
 bool entretien::Supprimer(int id)
  {   QSqlQuery query;
      QString id_string=QString::number(id);
@@ -176,3 +209,37 @@ query.bindValue(":temps",temps);
 
 return query.exec();
  }
+int entretien :: statistique_EA(QString id)
+{
+ int nbrEA=0;
+  QSqlQuery requete("select  resultat.ID_EN, resultat.RETOUR , offre.ID_ENTREPRISE from resultat,entretien,offre  where resultat.ID_EN=entretien.ID_RDV and entretien.ID_O=offre.ID and  retour='a' and offre.ID_ENTREPRISE like '"+id+"%' ;");
+
+   while(requete.next())
+    {
+        nbrEA++;
+        }
+   return nbrEA;
+
+}
+int entretien :: statistique_EO(QString id)
+{
+ int nbrEO=0;
+  QSqlQuery requete("select  resultat.ID_EN, resultat.RETOUR , offre.ID_ENTREPRISE from resultat,entretien,offre  where resultat.ID_EN=entretien.ID_RDV and entretien.ID_O=offre.ID and  retour='r' and offre.ID_ENTREPRISE like '"+id+"%' ; ");
+   while(requete.next())
+    {
+        nbrEO++;
+        }
+   return nbrEO;
+
+}
+int entretien :: statistique_ET(QString id)
+{
+    int nbrET=0;
+     QSqlQuery requete("select  resultat.ID_EN, resultat.RETOUR , offre.ID_ENTREPRISE from resultat,entretien,offre  where resultat.ID_EN=entretien.ID_RDV and entretien.ID_O=offre.ID and  offre.ID_ENTREPRISE like '"+id+"%' ;");
+      while(requete.next())
+       {
+           nbrET++;
+           }
+      return nbrET;
+
+}
