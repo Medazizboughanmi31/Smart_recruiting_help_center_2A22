@@ -1,17 +1,24 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include "connexion.h"
+#include "loggingin.h"
 #include <QMessageBox>
+#include "choixagent.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w,x;
     Connexion c;
-    w.show();
+
 
     bool test=c.createconnect();
+    //MainWindow w;
+   // w.show();
+    //LoggingIN L ;
+  //  L.show();
+    ChoixAgent ch ;
+    ch.show() ;
     if(test)
-    {x.show();
+    {
         QMessageBox::information(nullptr, QObject::tr("database is open"),
                     QObject::tr("connection successful.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);

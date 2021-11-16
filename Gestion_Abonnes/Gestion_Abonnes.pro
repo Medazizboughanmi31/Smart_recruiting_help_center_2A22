@@ -1,5 +1,5 @@
-QT       += core gui
-QT       += sql
+QT       += core gui sql printsupport
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -11,16 +11,25 @@ CONFIG += c++11
 
 SOURCES += \
     abonne.cpp \
+    choixagent.cpp \
     connexion.cpp \
+    gestion.cpp \
+    loggingin.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     abonne.h \
+    choixagent.h \
     connexion.h \
+    gestion.h \
+    loggingin.h \
     mainwindow.h
 
 FORMS += \
+    choixagent.ui \
+    gestion.ui \
+    loggingin.ui \
     mainwindow.ui
 
 # Default rules for deployment.

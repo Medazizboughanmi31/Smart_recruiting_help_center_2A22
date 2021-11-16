@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>848</width>
+    <height>632</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Gestion Des abonnés</string>
+   <string>Gestion Administrateur</string>
   </property>
   <property name="autoFillBackground">
    <bool>false</bool>
@@ -70,7 +70,7 @@
     </property>
     <widget class="QWidget" name="CRUD">
      <attribute name="title">
-      <string>CRUD</string>
+      <string>GESTION ADMINISTRATEUR</string>
      </attribute>
      <widget class="QTabWidget" name="tabWidget_2">
       <property name="geometry">
@@ -82,13 +82,13 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="Ajout">
        <attribute name="title">
         <string>Ajout</string>
        </attribute>
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QPushButton" name="pushButton_AnullerAjout">
         <property name="geometry">
          <rect>
           <x>510</x>
@@ -386,7 +386,7 @@
          <string>Supprimer</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_9">
+       <widget class="QPushButton" name="pushButton_AnnulerSupp">
         <property name="geometry">
          <rect>
           <x>540</x>
@@ -399,10 +399,44 @@
          <string>Annuler</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_10">
+      </widget>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Modifier</string>
+       </attribute>
+       <widget class="QLineEdit" name="lineEdit_CIN_update">
         <property name="geometry">
          <rect>
-          <x>20</x>
+          <x>10</x>
+          <y>30</y>
+          <width>321</width>
+          <height>41</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_18">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>171</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="text">
+         <string>CIN </string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_Modifier">
+        <property name="geometry">
+         <rect>
+          <x>460</x>
           <y>340</y>
           <width>91</width>
           <height>28</height>
@@ -412,373 +446,245 @@
          <string>Mettre a jour</string>
         </property>
        </widget>
+       <widget class="QLineEdit" name="lineEdit_NOM_update">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>130</y>
+          <width>113</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_PRENOM_update">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>130</y>
+          <width>113</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_TEL_update">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>290</y>
+          <width>113</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_NIVEAUETUDE_update">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>290</y>
+          <width>113</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_ADRESSE_update">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>230</y>
+          <width>113</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_SEXE_update">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>230</y>
+          <width>113</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_AGE_updtae">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>180</y>
+          <width>113</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_EMAIL_update">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>180</y>
+          <width>113</width>
+          <height>22</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_19">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>110</y>
+          <width>55</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>NOM</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_20">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>110</y>
+          <width>55</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>PRENOM</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_21">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>160</y>
+          <width>55</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>EMAIL</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_22">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>160</y>
+          <width>55</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>AGE</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_38">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>210</y>
+          <width>55</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>SEXE</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_39">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>210</y>
+          <width>55</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>ADRESSE</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_40">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>270</y>
+          <width>101</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>NIVEAU D'ETUDE</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_41">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>270</y>
+          <width>55</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>TEL</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_Entrer">
+        <property name="geometry">
+         <rect>
+          <x>370</x>
+          <y>40</y>
+          <width>91</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Entrer</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="pushButton_AnnulerModifier">
+        <property name="geometry">
+         <rect>
+          <x>560</x>
+          <y>340</y>
+          <width>91</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Annuler</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="widget">
-     <attribute name="title">
-      <string>Logging In</string>
-     </attribute>
-     <widget class="QLineEdit" name="lineEdit">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>150</y>
-        <width>321</width>
-        <height>41</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_2">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>260</y>
-        <width>321</width>
-        <height>41</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>215</y>
-        <width>91</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Mot de passe</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>95</y>
-        <width>171</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="text">
-       <string>Nom d'utilisateur</string>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::RichText</enum>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton">
-      <property name="geometry">
-       <rect>
-        <x>140</x>
-        <y>330</y>
-        <width>121</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Se connecter</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="Preference">
-     <attribute name="title">
-      <string>Preference</string>
-     </attribute>
-     <widget class="QLabel" name="label_3">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>30</y>
-        <width>171</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="text">
-       <string>Critère de recherche</string>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::RichText</enum>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboBox">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>70</y>
-        <width>281</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="currentText">
-       <string/>
-      </property>
-      <item>
-       <property name="text">
-        <string/>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Adresse</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Age</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Sexe</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Niveau d'etude</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QTableView" name="tab_preference">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>180</y>
-        <width>621</width>
-        <height>251</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="Classification">
-     <attribute name="title">
-      <string>Classification</string>
-     </attribute>
-     <widget class="QLabel" name="label_5">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>40</y>
-        <width>171</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="text">
-       <string>Classer Selon : </string>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::RichText</enum>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="radioButton">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>50</y>
-        <width>251</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Ordre Alphabitique croissant des noms</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="radioButton_2">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>90</y>
-        <width>261</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Ordre Alphabitique décroissant des noms</string>
-      </property>
-     </widget>
-     <widget class="QRadioButton" name="radioButton_3">
-      <property name="geometry">
-       <rect>
-        <x>150</x>
-        <y>130</y>
-        <width>191</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Date d'ajout</string>
-      </property>
-     </widget>
-     <widget class="QTableView" name="tab_classification">
-      <property name="geometry">
-       <rect>
-        <x>30</x>
-        <y>180</y>
-        <width>621</width>
-        <height>251</height>
-       </rect>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="Reclamation">
-     <attribute name="title">
-      <string>Reclamation</string>
-     </attribute>
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>380</y>
-        <width>121</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Envoyer</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_3">
-      <property name="geometry">
-       <rect>
-        <x>520</x>
-        <y>380</y>
-        <width>121</width>
-        <height>28</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Annuler</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_4">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>50</y>
-        <width>201</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="text">
-       <string>Ecrire la reclamation ci-desous</string>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::RichText</enum>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="textEdit">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>116</y>
-        <width>601</width>
-        <height>231</height>
-       </rect>
-      </property>
-      <property name="html">
-       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="Stastiques">
-     <attribute name="title">
-      <string>Stastiques</string>
-     </attribute>
-     <widget class="QProgressBar" name="progressBar">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>120</y>
-        <width>231</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="value">
-       <number>24</number>
-      </property>
-     </widget>
-     <widget class="QProgressBar" name="progressBar_2">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>260</y>
-        <width>231</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="value">
-       <number>24</number>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_6">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>60</y>
-        <width>171</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="text">
-       <string>Abonnés Admis :</string>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::RichText</enum>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_7">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>200</y>
-        <width>171</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::NoFrame</enum>
-      </property>
-      <property name="text">
-       <string>Abonnés Rejetés :</string>
-      </property>
-      <property name="textFormat">
-       <enum>Qt::RichText</enum>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_4">
-      <property name="geometry">
-       <rect>
-        <x>470</x>
-        <y>387</y>
-        <width>151</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Mettre à jour</string>
-      </property>
-     </widget>
-    </widget>
+   </widget>
+   <widget class="QPushButton" name="pushButton_changerPoste">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>540</y>
+      <width>101</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Changer Poste</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_IMPRIME">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>10</y>
+      <width>121</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>IMPRIMER</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -786,7 +692,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>848</width>
      <height>26</height>
     </rect>
    </property>
