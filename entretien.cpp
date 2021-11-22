@@ -7,7 +7,8 @@
 #include <QTextDocument>
 #include <QObject>
 #include<QDate>
-
+#include<QSoundEffect>
+#include <QIcon>
 
 
 
@@ -139,17 +140,11 @@ QSqlQueryModel * entretien::rechercher(QString id)
 {
 
 QSqlQueryModel * model= new QSqlQueryModel();
-model->setQuery("select entretien.ID_RDV,entretien.ID_O ,entretien.DATE_RDV,entretien.HEURE_RDV,entretien.TYPE_RDV,entretien.NOM_C, societe.NOM_S ,abonne.Nom_A ,abonne.PRENOM_A ,abonne.EMAIL_A from entretien ,offre,societe,abonne where  entretien.ID_O=OFFRE.ID and OFFRE.ID_ENTREPRISE=SOCIETE.ID_S and entretien.CIN_AB=abonne.CIN and entretien.ID_O  like '"+id+"%'; ");
+model->setQuery("select ID_RDV, DATE_RDV, HEURE_RDV, TYPE_RDV From entretien  where  ID_O  like '"+id+"%' ORDER BY DATE_RDV ,HEURE_RDV; ");
 model->setHeaderData(0, Qt::Horizontal, QObject::tr("Num"));
-model->setHeaderData(1, Qt::Horizontal,QObject:: tr("offre"));
-model->setHeaderData(2, Qt::Horizontal,QObject:: tr("date"));
-model->setHeaderData(3, Qt::Horizontal, QObject::tr("heure"));
-model->setHeaderData(4, Qt::Horizontal,QObject:: tr("type"));
-model->setHeaderData(5, Qt::Horizontal, QObject::tr("centre"));
-model->setHeaderData(6, Qt::Horizontal, QObject::tr("Societe"));
-model->setHeaderData(7, Qt::Horizontal, QObject::tr("NOM"));
-model->setHeaderData(8, Qt::Horizontal, QObject::tr("PRENOM"));
-model->setHeaderData(9, Qt::Horizontal, QObject::tr("EMAIL"));
+model->setHeaderData(1, Qt::Horizontal,QObject:: tr("date"));
+model->setHeaderData(2, Qt::Horizontal,QObject:: tr("heure"));
+model->setHeaderData(3, Qt::Horizontal, QObject::tr("type"));
 return model;
 }
 QSqlQueryModel * entretien::rechercher_A(QString id)
@@ -176,7 +171,7 @@ return model;
 QSqlQueryModel * entretien ::TrieE()
 {
     QSqlQueryModel * model= new QSqlQueryModel();
-    model->setQuery("select ID_RDV, DATE_RDV, HEURE_RDV, TYPE_RDV From entretien ORDER BY ID_O,DATE_RDV ,HEURE_RDV");
+    model->setQuery("select ID_RDV, DATE_RDV, HEURE_RDV, TYPE_RDV From entretien ORDER BY DATE_RDV ,HEURE_RDV");
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Num"));
     model->setHeaderData(1, Qt::Horizontal,QObject:: tr("date"));
     model->setHeaderData(2, Qt::Horizontal,QObject:: tr("heure"));
@@ -243,3 +238,33 @@ int entretien :: statistique_ET(QString id)
       return nbrET;
 
 }
+void entretien::notifcation()
+{
+    int n=0;
+    QSqlQuery requete("select DATE_RDV from entretien where DATE_RDV like (sysdate+2);");
+ while(requete.next())
+     {
+     n++;
+      }
+ if(n!=0)
+
+ {
+ QSystemTrayIcon *trayIcon = new QSystemTrayIcon;
+             trayIcon->setIcon(QIcon(":/new/prefix2/notif.png"));
+             trayIcon->show();
+             trayIcon->showMessage("Attention" ,"Vous avez un entretien dans deux jours",QSystemTrayIcon::Information,15000);
+             if(trayIcon)
+             {
+                QSoundEffect * sound_effect = new QSoundEffect;
+                    sound_effect->setSource(QUrl("qrc:/new/prefix1/sound.wav"));
+                  // sound_effect->setLoopCount(QSoundEffect::Infinite);
+                    sound_effect->setVolume(0.9);
+                    sound_effect->play();
+                //  QEventLoop loop;
+                //  loop.exec();
+              }
+
+  }
+}
+
+

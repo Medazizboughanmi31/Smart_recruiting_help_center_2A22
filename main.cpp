@@ -2,15 +2,20 @@
 #include <QMessageBox>
 #include <QApplication>
 #include <QDebug>
+#include <QSystemTrayIcon>
 #include "connection.h"
 #include "entretien.h"
 #include "historique.h"
+#include<QSoundEffect>
+#include <QIcon>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
    connection c;
+   entretien e;
      bool test=c.createconnection();
+
     MainWindow w;
 
     if(test)
@@ -24,5 +29,8 @@ int main(int argc, char *argv[])
         QMessageBox::critical(nullptr, QObject::tr("database is not open"),
                     QObject::tr("connection failed.\n"
                                 "Click Cancel to exit."), QMessageBox::Cancel);
-    return a.exec();
+
+
+    e.notifcation();
+   return a.exec();
 }

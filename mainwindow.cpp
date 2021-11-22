@@ -5,14 +5,17 @@
 #include"historique.h"
 #include <QMessageBox>
 #include <QSqlQueryModel>
+#include <QSystemTrayIcon>
 #include<QDebug>
-
+#include <QDesktopServices>
+#include <QUrl>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+   ;
     ui->table_e->setModel(E.Afficher());
     ui->comboBox_C->addItems(E.lister());
     ui->comboBox_S->addItems(E.lister2());
@@ -65,6 +68,8 @@ c.createconnection();
                                  QObject::tr("Ajout non effectue \n"
                                              "click cancel to exit,"),QMessageBox::Cancel);
 
+   e.notifcation();
+
 }
 
 
@@ -76,7 +81,7 @@ c.createconnection();
 void MainWindow::on_offre_A_textChanged(const QString &arg1)
 {
   entretien e;
-     ui->table_e->setModel( e.rechercher(arg1));
+     ui->tri->setModel( e.rechercher(arg1));
 
 }
 
@@ -224,3 +229,9 @@ void MainWindow::stat(){
 
 }
 
+
+void MainWindow::on_pushButton_clicked()
+{
+    QString link="https://mail.google.com/mail/u/0/#inbox?compose=new";
+        QDesktopServices::openUrl(link);
+}

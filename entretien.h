@@ -6,6 +6,7 @@
 #include <QDate>
 #include <QTime>
 #include <QStringList>
+#include <QSystemTrayIcon>
 
 
 #include <QDialog>
@@ -68,7 +69,7 @@ QSqlQueryModel * TrieE();
 int  statistique_EA(QString);
 int  statistique_EO(QString);
 int statistique_ET(QString);
-
+void notifcation();
 };
 
 #endif // ENTRETIEN_H
