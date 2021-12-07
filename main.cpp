@@ -32,5 +32,7 @@ int main(int argc, char *argv[])
 
 
     e.notifcation();
+
+    
    return a.exec();
 }

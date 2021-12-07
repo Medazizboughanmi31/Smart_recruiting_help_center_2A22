@@ -15,7 +15,7 @@
 #include <QtCharts/QCategoryAxis>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
-
+#include"arduino.h"
 #include <QPainter>
 
 QT_CHARTS_USE_NAMESPACE
@@ -33,32 +33,30 @@ public:
 
 private slots:
 
-
-    void on_ajouter_clicked();
-
-
-    void on_offre_A_textChanged(const QString &arg1);
-
-    void on_num_A_textChanged(const QString &arg2);
-
-    void on_Supprimer_clicked();
+    void on_ent_ajouter_clicked();
 
 
-    void on_num_r_clicked();
+    void on_ent_offre_A_textChanged(const QString &arg1);
 
-    void on_modifier_clicked();
+    void on_ent_num_A_textChanged(const QString &arg2);
+
+    void on_ent_Supprimer_clicked();
+
+
+    void on_ent_num_r_clicked();
+
+    void on_ent_modifier_clicked();
     void stat();
 
-
-
-
-    void on_comboBoxStat_currentTextChanged(const QString &arg1);
-
-    void on_pushButton_clicked();
+    void on_ent_email_clicked();
 
 private:
     Ui::MainWindow *ui;
     entretien E;
     historique H;
+
+    QByteArray data; // variable contenant les données reçues
+
+    Arduino A; // objet temporaire
 };
 #endif // MAINWINDOW_H

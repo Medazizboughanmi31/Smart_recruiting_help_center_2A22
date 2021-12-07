@@ -34,7 +34,7 @@ private :
      QDate  DateE;
      QString  Heures;
      QString Type;
-      //int Num;
+
 
 public:
 
@@ -70,6 +70,8 @@ int  statistique_EA(QString);
 int  statistique_EO(QString);
 int statistique_ET(QString);
 void notifcation();
+bool nbrE(int);
+bool ajoutnbE(int);
 };
 
 #endif // ENTRETIEN_H

@@ -266,5 +266,26 @@ void entretien::notifcation()
 
   }
 }
+bool entretien::nbrE(int cin)
+{
+     QString cina=QString::number(cin);
+ //select nombre_e from abonne  where CIN='1122334455'  ;
+ QSqlQuery query1("select count * from entretien where CIN_AB like '"+cina+"%' ");
+ QSqlQuery query2("select nombre_e from abonner where CIN like '"+cina+"% ");
+ int n=query1.exec();
+int n2=query2.exec();
 
+ if(n>=n2)
+     {
+     return true;
+  }else return false;
+}
+bool ajoutnbE(int cin)
+{
+
+    QString cina=QString::number(cin);
+    QSqlQuery query2("UPDATE abonne SET  NOMBRE_E= NOMBRE_E+1 where CIN like '"+cina+"%' ");
+
+    return query2.exec();
+}
 

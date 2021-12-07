@@ -15,14 +15,23 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-   ;
-    ui->table_e->setModel(E.Afficher());
-    ui->comboBox_C->addItems(E.lister());
-    ui->comboBox_S->addItems(E.lister2());
-    ui->comboBox_O->addItems(E.lister3());
-    ui->comboBoxStat->addItems(E.listerS());
-    ui->tri->setModel(E.TrieE());
-    ui->view_histo->setModel(H.Afficher());
+    int ret=A.connect_arduino(); // lancer la connexion à arduino
+    switch(ret){
+    case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+        break;
+    case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+       break;
+    case(-1):qDebug() << "arduino is not available";
+    }
+    QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label())); // permet de lancer
+    //le slot update_label suite à la reception du signal readyRead (reception des données).
+    ui->ent_table_e->setModel(E.Afficher());
+    ui->ent_comboBox_C->addItems(E.lister());
+    ui->ent_comboBox_S->addItems(E.lister2());
+    ui->ent_comboBox_O->addItems(E.lister3());
+    ui->ent_comboBoxStat->addItems(E.listerS());
+    ui->ent_tri->setModel(E.TrieE());
+    ui->ent_view_histo->setModel(H.Afficher());
 stat();
 
 }
@@ -34,84 +43,115 @@ MainWindow::~MainWindow()
 
 
 
-void MainWindow::on_ajouter_clicked()
-{
+void MainWindow::on_ent_ajouter_clicked()
+{entretien e;
 connection c;
 c.createconnection();
-    int CIN_A=ui->cin_aj->text().toInt();
+
+    int CIN_A=ui->ent_cin_aj->text().toInt();
     //int ID_offre=ui->offre->text().toInt();
-    int ID_offre =ui->comboBox_O->currentText().toInt();
-    QString NOM_C=ui->comboBox_C->currentText();
-    QDate DateE= ui->date_Aj->date();
-    QString Heures= ui->time_aj->text();
-    QString Type=ui->type->currentText();
-    entretien e( CIN_A,ID_offre,NOM_C,DateE, Heures,Type);
-    bool test=e.Ajouter();
-   if(test)
+   bool testnb=e.nbrE(CIN_A);
+   if(testnb==false)
    {
+       int ID_offre =ui->ent_comboBox_O->currentText().toInt();
+       QString NOM_C=ui->ent_comboBox_C->currentText();
 
-     QMessageBox ::information(nullptr,QObject::tr("OK"),
-                               QObject::tr("Ajout effectue \n"
-                                           "click cancel to exit,"),QMessageBox::Cancel);
-     QString operation="Ajout";
-     historique H(operation);
-     H.Ajouter();
-      ui->view_histo->setModel(H.Afficher());
-      ui->table_e->setModel(E.Afficher());
-      ui->tri->setModel(E.TrieE());
-      ui->comboBox_S->addItems(E.lister2());
+       QDate DateE= ui->ent_date_Aj->date();
+       QString Heures= ui->ent_time_aj->text();
+       QString Type=ui->ent_type->currentText();
+       entretien e( CIN_A,ID_offre,NOM_C,DateE, Heures,Type);
+       bool test=e.Ajouter();
+      if(test)
+      {
+        A.write_to_arduino("0");
+        QMessageBox ::information(nullptr,QObject::tr("OK"),
+                                  QObject::tr("Ajout effectue \n"
+                                              "click cancel to exit,"),QMessageBox::Cancel);
 
+        QSqlQuery query;
+        query.prepare("UPDATE abonne SET NOMBRE_E = NOMBRE_E+1 where  CIN= :CIN_A ");
+         query.bindValue(":CIN_A",CIN_A);
+        // CIN=CIN_A;
+
+        QString operation="Ajout";
+        historique H(operation);
+        H.Ajouter();
+         ui->ent_view_histo->setModel(H.Afficher());
+         ui->ent_table_e->setModel(E.Afficher());
+         ui->ent_tri->setModel(E.TrieE());
+         ui->ent_comboBox_S->addItems(E.lister2());
+
+      }
+
+      else
+          QMessageBox ::information(nullptr,QObject::tr("Not OK"),
+                                    QObject::tr("Ajout non effectue \n"
+                                                "click cancel to exit,"),QMessageBox::Cancel);
+
+
+   }else
+   { A.write_to_arduino("1");
+       QMessageBox ::information(nullptr,QObject::tr("Not OK"),
+                                 QObject::tr("vous n'avez plus le droit de prendre un nouveau rendez-vous "),QMessageBox::Cancel);
 
    }
-   else
-       QMessageBox ::information(nullptr,QObject::tr("Not OK"),
-                                 QObject::tr("Ajout non effectue \n"
-                                             "click cancel to exit,"),QMessageBox::Cancel);
-
-   e.notifcation();
+ e.notifcation();
 
 }
 
+/*void MainWindow::update_label()
+{entretien e;
+    data=A.read_from_arduino();
+
+
+             if(data=="2")
+             {
+                  e.ajoutnbE(CIN);
+             }
+     // si les données reçues de arduino via la liaison série sont égales à 0
+     //alors afficher ON
+}*/
 
 
 
 
 
 
-void MainWindow::on_offre_A_textChanged(const QString &arg1)
+
+void MainWindow::on_ent_offre_A_textChanged(const QString &arg1)
 {
   entretien e;
-     ui->tri->setModel( e.rechercher(arg1));
+     ui->ent_tri->setModel( e.rechercher(arg1));
 
 }
 
-void MainWindow::on_num_A_textChanged(const QString &arg2)
+void MainWindow::on_ent_num_A_textChanged(const QString &arg2)
 {
     entretien e;
-    ui->table_e->setModel( e.rechercher_A(arg2));
+    ui->ent_table_e->setModel( e.rechercher_A(arg2));
 
 }
 
-void MainWindow::on_Supprimer_clicked()
+void MainWindow::on_ent_Supprimer_clicked()
 {
     connection c;
     c.createconnection();
     entretien E;
     historique H;
    // int id=ui->num_S->text().toInt();
-      int id =ui->comboBox_S->currentText().toInt();
+      int id =ui->ent_comboBox_S->currentText().toInt();
        bool test =E.Supprimer(id);
        QMessageBox msg ;
        if (test)
         {
        msg.setText("suppression avec succés");
-       ui->table_e->setModel(E.Afficher());
-       ui->tri->setModel(E.TrieE());
-         ui->comboBox_S->clear();
+       ui->ent_table_e->setModel(E.Afficher());
+       ui->ent_tri->setModel(E.TrieE());
+         ui->ent_comboBox_S->clear();
        QString operation="Suppression";
        historique H(operation);
        H.Ajouter();
-        ui->view_histo->setModel(H.Afficher());
+        ui->ent_view_histo->setModel(H.Afficher());
 
        }
        else
@@ -123,44 +163,44 @@ void MainWindow::on_Supprimer_clicked()
 
 
 
-void MainWindow::on_num_r_clicked()
+void MainWindow::on_ent_num_r_clicked()
 {
      QSqlQuery query;
      query.prepare("select TYPE_RDV, DATE_RDV, HEURE_RDV from entretien where ID_RDV=?;");
-     query.addBindValue(ui->num_M->text());
+     query.addBindValue(ui->ent_num_M->text());
      if(query.exec())
         {
          while(query.next())
           {
 
-     ui->date_M->setDate(query.value(1).toDate());
-     ui->time_M->setTime(query.value(2).toTime());
+     ui->ent_date_M->setDate(query.value(1).toDate());
+     ui->ent_time_M->setTime(query.value(2).toTime());
 
       QString t=query.value(0).toString();
-     ui->comboBox_M->setCurrentText(t);
+     ui->ent_comboBox_M->setCurrentText(t);
 
              }
          }
 }
 
-void MainWindow::on_modifier_clicked()
+void MainWindow::on_ent_modifier_clicked()
 {
     entretien E;
-    int id=ui->num_M->text().toInt();
-    QString Type=ui->comboBox_M->currentText();
-    QDate date= ui->date_M->date();
-    QString temps= ui->time_M->text();
+    int id=ui->ent_num_M->text().toInt();
+    QString Type=ui->ent_comboBox_M->currentText();
+    QDate date= ui->ent_date_M->date();
+    QString temps= ui->ent_time_M->text();
    bool test= E.modifier(id,Type,date,temps);
     QMessageBox msg;
    if(test)
-   { ui->table_e->setModel(E.Afficher());
+   { ui->ent_table_e->setModel(E.Afficher());
                    msg.setText("modifie avec succés");
-                  ui->table_e->setModel(E.Afficher());
+                  ui->ent_table_e->setModel(E.Afficher());
                   QString operation="Modifier";
                   historique H(operation);
                   H.Ajouter();
-                   ui->view_histo->setModel(H.Afficher());
-                    ui->tri->setModel(E.TrieE());
+                   ui->ent_view_histo->setModel(H.Afficher());
+                    ui->ent_tri->setModel(E.TrieE());
 
                    }
                    else
@@ -169,10 +209,11 @@ void MainWindow::on_modifier_clicked()
                    }
                    msg.exec();
 
-               ui->num_M->clear();
-               ui->comboBox_M->clear();
-               ui->date_M->clear();
-               ui->time_M->clear();
+               ui->ent_num_M->clear();
+               ui->ent_comboBox_M->clear();
+               ui->ent_date_M->clear();
+               ui->ent_time_M->clear();
+                  E.notifcation();
 
 }
 
@@ -181,56 +222,27 @@ void MainWindow::on_modifier_clicked()
 
 
 
-void MainWindow::on_comboBoxStat_currentTextChanged(const QString &arg1)
-{stat();
-/*
-    float SA=0,SO=0;
-     int a =E.statistique_EA(ui->comboBoxStat->currentText());
-    int o=E.statistique_EO(ui->comboBoxStat->currentText());
-     int t=E.statistique_ET(ui->comboBoxStat->currentText());
-     SA=(a*100)/t;
-     SO=(o*100)/t;
-     QBarSet *set0=new QBarSet("Accepté");
-      QBarSet *set1=new QBarSet("Refusé");
-     *set0<<SA;
-      *set1<<SO;
-      QBarSeries *series=new QBarSeries();
-      series->append(set0);
-      series->append(set1);
-      QChart *chart=new QChart();
-      chart->addSeries(series);
-      chart->setTitle("statistique des entretiens");
-      chart->setAnimationOptions(QChart::SeriesAnimations);
-      QStringList categories;
-      categories<<"entretien";
-      QBarCategoryAxis *axis=new QBarCategoryAxis();
-      axis->append(categories);
-      chart->createDefaultAxes();
-      chart->setAxisX(axis,series);
-      QChartView *chartView=new QChartView(chart);
-      chartView->setParent(ui->frame);
-*/
-}
+
 void MainWindow::stat(){
 
-    ui->progressBar->setValue(0);
-    ui->progressBar_2->setValue(0);
+    ui->ent_progressBar->setValue(0);
+    ui->ent_progressBar_2->setValue(0);
     int SA=0,SO=0;
-     int a =E.statistique_EA(ui->comboBoxStat->currentText());
-    int o=E.statistique_EO(ui->comboBoxStat->currentText());
-     int t=E.statistique_ET(ui->comboBoxStat->currentText());
+     int a =E.statistique_EA(ui->ent_comboBoxStat->currentText());
+    int o=E.statistique_EO(ui->ent_comboBoxStat->currentText());
+     int t=E.statistique_ET(ui->ent_comboBoxStat->currentText());
      SA=(a*100)/t;
      SO=(o*100)/t;
 
 
- ui->progressBar->setValue(SA);
-  ui->progressBar_2->setValue(SO);
+ ui->ent_progressBar->setValue(SA);
+  ui->ent_progressBar_2->setValue(SO);
 
 
 }
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_ent_email_clicked()
 {
     QString link="https://mail.google.com/mail/u/0/#inbox?compose=new";
         QDesktopServices::openUrl(link);
